@@ -1,0 +1,44 @@
+<mat-horizontal-stepper linear #stepper>
+
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Please select a continent from the list</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>Continent</mat-label>
+        <select matNativeControl required (change)="getData($event)">
+          <option value="" selected></option>
+          <option value="Europe">Europe</option>
+          <option value="Asia">Asia</option>
+        </select>
+      </mat-form-field>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Please select a country from the list</ng-template>
+      <mat-form-field appearance="fill">
+        <select matNativeControl required (change)="showDetails($event)">
+          <option value="none" selected></option>
+          <option *ngFor="let countrie of countries" value="{{countrie}}">{{countrie}}</option>
+        </select>
+      </mat-form-field>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <table class="mat-elevation-z5">
+      <tr>
+        <th *ngFor="let displayedColumn of displayedColumns">{{displayedColumn}}</th>
+      </tr>
+      <tr>
+        <td>{{dataSource.data.name}}</td>
+        <td>{{dataSource.data.capital}}</td>
+        <td>{{dataSource.data.population}}</td>
+        <td *ngFor="let currencie of dataSource.data.currencies" >{{currencie.name}}</td>
+        <td><img src="{{dataSource.data.flag}}"/></td>
+      </tr>
+    </table>
+  </mat-step>
+  
+</mat-horizontal-stepper>
